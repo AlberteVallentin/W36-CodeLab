@@ -3,12 +3,15 @@ package dk.cph.model;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.ArrayList;
+import java.util.List;
 
 
 @Entity
 @Table(name = "teachers")
 @NoArgsConstructor
 @Getter
+@Setter
 @ToString
 @NamedQuery(name = "Teacher.deleteAll", query = "DELETE FROM Teacher")
 public class Teacher {
@@ -26,4 +29,6 @@ public class Teacher {
     @Column(name = "zoom", unique = true)
     private String zoom;
 
+    @OneToMany(mappedBy = "teacher", fetch=FetchType.LAZY, cascade = CascadeType.PERSIST)
+    private List<Course> courses = new ArrayList<>();
 }

@@ -4,6 +4,8 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDateTime;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table(name = "students")
@@ -17,6 +19,7 @@ import java.time.LocalDateTime;
         @NamedQuery(name = "Student.deleteAll", query = "DELETE FROM Student")
 })
 public class Student {
+
 
     @Id
     @Setter(AccessLevel.NONE)
@@ -37,4 +40,17 @@ public class Student {
     @Column(name = "updated_at", nullable = false)
     private LocalDateTime updatedAt;
 
+    @ManyToMany(mappedBy = "students",fetch=FetchType.LAZY, cascade = CascadeType.PERSIST)
+    private Set<Course> courses = new HashSet<>();
+
+    public void setUpdatedAt(LocalDateTime now) {
+        this.updatedAt = now;
+    }
+
+    public void getCreatedAt(LocalDateTime now) {
+        this.createdAt=now;
+    }
+    public void setCreatedAt(LocalDateTime now) {
+        this.createdAt=now;
+    }
 }
